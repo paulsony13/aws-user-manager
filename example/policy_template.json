@@ -1,0 +1,28 @@
+{
+  "ECSReadPolicyList": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecs:Describe*",
+          "ecs:List*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "ECSReadPolicyDescribe": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecs:Describe*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}
+
