@@ -1,11 +1,11 @@
 module "main-roles" {
-  source          = "./modules/main-roles"
+  source          = "github.com/paulsony13/aws-user-manager//modules/main-roles"
   users           = var.users
   main_account_id = var.mainAccountId
 }
 
 module "AWSAccount1" {
-  source    = "./modules/assume-roles"
+  source    = "github.com/paulsony13/aws-user-manager//modules/assume-roles"
   users     = var.users
   accountId = "<account-id-1>"
   providers = {
@@ -13,7 +13,7 @@ module "AWSAccount1" {
   }
 }
 module "AWSAccount2" {
-  source    = "./modules/assume-roles"
+  source    = "github.com/paulsony13/aws-user-manager//modules/assume-roles"
   users     = var.users
   accountId = "<account-id-2>"
   providers = {
@@ -22,7 +22,7 @@ module "AWSAccount2" {
 }
 
 # module "AWSAccount3" {
-#   source    = "./modules/assume-roles"
+#   source    = "github.com/paulsony13/aws-user-manager//modules/assume-roles"
 #   users     = var.users
 #   accountId = "<account-id-3>"
 #   providers = {
