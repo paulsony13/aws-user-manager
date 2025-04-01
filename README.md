@@ -1,7 +1,7 @@
 # AWS User Manager Terraform Module
 
 ## Overview
-This Terraform module automates the onboarding of AWS users by creating IAM roles with the necessary permissions. It supports role-based access control (RBAC) and cross-account role assumptions, ensuring a scalable and secure approach to managing user access within an AWS Organization.
+This Terraform module automates the onboarding of AWS users by creating IAM roles with the necessary permissions. It supports role-based access control (RBAC) and cross-account role assumptions, ensuring a scalable and secure approach to managing user access within multiple AWS accounts without using AWS Orginizations .
 
 ## Features
 - **Automated IAM Role Creation**: Assigns unique IAM roles for each user.
@@ -16,22 +16,23 @@ This Terraform module automates the onboarding of AWS users by creating IAM role
 
 ## Usage
 
+# Landing AWS account role creation
 ```hcl
-module "aws_user_manager" {
-  source          = "github.com/paulsony13/aws-user-manager"
-  mainAccountId   = "123456789012"
-  users = [
-    {
-      username = "aws.admin@example.com"
-      accounts = [
-        {
-          account_id        = "987654321098"
-          awsmanagedpolicy  = ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-          custom_policy     = ["customPolicyDocument"]
-        }
-      ]
-    }
-  ]
+module "aws_landing_main_role" {
+  source          = "github.com/paulsony13/aws-user-manager//modules/main-roles"
+  users           = var.users
+  main_account_id = "123456789012"
+}
+```
+# child AWS account role creation
+```hcl
+module "assume_role_aws_account1" {
+  source          = "github.com/paulsony13/aws-user-manager//modules/assume-roles"
+  users     = var.users
+  accountId = "<account-id-1>"
+  providers = {
+    aws = aws.awsAccount1
+  }
 }
 ```
 
@@ -52,6 +53,7 @@ module "aws_user_manager" {
    ```sh
    git clone https://github.com/paulsony13/aws-user-manager.git
    ```
+   update the providers and add as many as child accounts you want
 2. Initialize Terraform:
    ```sh
    terraform init
