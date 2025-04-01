@@ -1,5 +1,5 @@
 module "main-roles" {
-  source = "./modules/main-roles"
+  source          = "./modules/main-roles"
   users           = var.users
   main_account_id = var.mainAccountId
 }
